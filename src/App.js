@@ -12,6 +12,18 @@ const theme = createTheme({
       main: "#808080",
     },
   },
+  typography: {
+    fontFamily: "Nunito Sans, Roboto, sans-serif",
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 625,
+      md: 920,
+      lg: 1200,
+      xl: 1920,
+    },
+  },
 });
 
 function App() {
