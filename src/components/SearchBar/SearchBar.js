@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(2),
+    margin: "24px 8px 24px 8px",
     minWidth: 200,
     backgroundColor: theme.palette.background.paper,
     "& .MuiSelect-select:focus": {
@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     "& .Mui-focused": {
       color: theme.palette.text.secondary,
     },
+  },
+  query: {
+    width: 400,
   },
 }));
 
@@ -34,7 +37,7 @@ const SearchBar = () => {
       <TextField
         id="query-text"
         placeholder="Search for a country..."
-        className={classes.formControl}
+        className={`${classes.formControl} ${classes.query}`}
         value={values.query}
         onChange={handleChange("query")}
         InputProps={{

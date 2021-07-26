@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 
 import Header from "./components/Header/Header";
 import Homepage from "./components/Homepage";
+import CountryDetailsPage from "./components/CountryDetailsPage";
 
 const theme = createTheme({
   palette: {
@@ -21,7 +22,7 @@ const theme = createTheme({
       sm: 625,
       md: 920,
       lg: 1200,
-      xl: 1920,
+      xl: 1340,
     },
   },
 });
@@ -35,6 +36,7 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" exact component={Homepage} />
+          <Route path="/:country" component={CountryDetailsPage} />
         </Switch>
       </Router>
     </ThemeProvider>

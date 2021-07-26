@@ -12,12 +12,18 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: "100%",
       flexBasis: "100%",
     },
+    content: {
+      marginTop: 12,
+    },
   },
   [theme.breakpoints.only("sm")]: {
     row: {
       flexGrow: 0,
       maxWidth: "50%",
       flexBasis: "50%",
+    },
+    content: {
+      marginTop: 12,
     },
   },
   [theme.breakpoints.only("md")]: {
@@ -34,6 +40,14 @@ const useStyles = makeStyles((theme) => ({
       flexBasis: "25%",
     },
   },
+
+  searchBar: {
+    minHeight: 175,
+    alignContent: "center",
+  },
+  container: {
+    minWidth: 300,
+  },
 }));
 
 const Homepage = () => {
@@ -47,11 +61,15 @@ const Homepage = () => {
   // }, []);
 
   return (
-    <Container style={{ minWidth: 300 }}>
-      <Grid container justifyContent="space-between">
+    <Container maxWidth="xl" className={classes.container}>
+      <Grid
+        container
+        justifyContent="space-between"
+        className={classes.searchBar}
+      >
         <SearchBar />
       </Grid>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className={classes.content}>
         {countries.map((country) => (
           <Grid
             item
