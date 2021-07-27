@@ -32,13 +32,15 @@ const CountryDetailsPage = () => {
       const countryEl = countryList.find(
         (element) => element.name === countryName
       );
-      setCountry(countryEl);
-      setBorderCountries(
-        countryEl.borders.map(
-          (country) =>
-            countryList.find((element) => element.alpha3Code === country).name
-        )
-      );
+      if (countryEl) {
+        setCountry(countryEl);
+        setBorderCountries(
+          countryEl.borders.map(
+            (country) =>
+              countryList.find((element) => element.alpha3Code === country).name
+          )
+        );
+      }
     }
   }, [countryList, countryName]);
 

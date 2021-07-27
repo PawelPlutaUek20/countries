@@ -29,13 +29,22 @@ function App() {
         xl: 1340,
       },
     },
+    overrides: {
+      MuiTypography: {
+        body2: {
+          "& b": {
+            fontWeight: 600,
+          },
+        },
+      },
+    },
   });
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <CountriesContextProvider>
           <Header darkMode={darkMode} setDarkMode={setDarkMode} />
           <Switch>

@@ -7,6 +7,9 @@ const useStyles = makeStyles({
   toolbar: {
     justifyContent: "space-between",
   },
+  button: {
+    textTransform: "none",
+  },
 });
 
 export { useStyles };

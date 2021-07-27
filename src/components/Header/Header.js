@@ -1,9 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import { useStyles } from "./Header.style";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness4Icon from "@material-ui/icons/Brightness4";
@@ -18,13 +13,16 @@ const Header = ({ darkMode, setDarkMode }) => {
         <Typography variant="h6" component="h1">
           <b>Where in the world?</b>
         </Typography>
-        <IconButton
+        <Button
           color="inherit"
-          aria-label="theme"
+          className={classes.button}
           onClick={() => setDarkMode(!darkMode)}
+          startIcon={darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
         >
-          {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-        </IconButton>
+          <Typography variant="body2">
+            <b>{darkMode ? "Light Mode" : "Dark Mode"}</b>
+          </Typography>
+        </Button>
       </Toolbar>
     </AppBar>
   );

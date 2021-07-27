@@ -35,13 +35,13 @@ const CountryCard = ({ country }) => {
             >
               <b>{country.name}</b>
             </Typography>
-            <Typography variant="body2">
+            <Typography gutterBottom variant="body2">
               <b>Population:</b> {country.population.toLocaleString()}
             </Typography>
-            <Typography variant="body2">
+            <Typography gutterBottom variant="body2">
               <b>Region:</b> {country.region}
             </Typography>
-            <Typography variant="body2">
+            <Typography gutterBottom variant="body2">
               <b>Capital:</b> {country.capital}
             </Typography>
           </CardContent>
