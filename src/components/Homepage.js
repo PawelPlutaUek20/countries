@@ -1,64 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchBar from "./SearchBar/SearchBar";
 import CountryCard from "./CountryCard/CountryCard";
-import { Container, Grid, makeStyles } from "@material-ui/core";
-
-import data from "../static/data.json";
-
-const useStyles = makeStyles((theme) => ({
-  [theme.breakpoints.only("xs")]: {
-    row: {
-      flexGrow: 0,
-      maxWidth: "100%",
-      flexBasis: "100%",
-    },
-    content: {
-      marginTop: 12,
-    },
-  },
-  [theme.breakpoints.only("sm")]: {
-    row: {
-      flexGrow: 0,
-      maxWidth: "50%",
-      flexBasis: "50%",
-    },
-    content: {
-      marginTop: 12,
-    },
-  },
-  [theme.breakpoints.only("md")]: {
-    row: {
-      flexGrow: 0,
-      maxWidth: "33.333333%",
-      flexBasis: "33.333333%",
-    },
-  },
-  [theme.breakpoints.up("lg")]: {
-    row: {
-      flexGrow: 0,
-      maxWidth: "25%",
-      flexBasis: "25%",
-    },
-  },
-
-  searchBar: {
-    minHeight: 175,
-    alignContent: "center",
-  },
-  container: {
-    minWidth: 300,
-  },
-}));
+import { Container, Grid } from "@material-ui/core";
+import { CountriesContext } from "../contextHelpers/CountriesContex";
+import { useStyles } from "./Homepage.style";
 
 const Homepage = () => {
   const classes = useStyles();
-  const [countries] = useState(data);
+  const { countryList } = useContext(CountriesContext);
 
-  // useEffect(() => {
-  //   fetch("https://restcountries.eu/rest/v2/all")
-  //     .then((response) => response.json())
-  //     .then((jsonResponse) => setCountries(jsonResponse));
-  // }, []);
+  const [filteredCountryList, setFilteredCountryList] = useState([]);
+
+  const updateCountryList = async (input) => {
+    setFilteredCountryList(
+      countryList
+        .filter((country) => country.name.toLowerCase().includes(input.query))
+        .filter((country) => country.region.includes(input.region))
+    );
+  };
+
+  useEffect(() => {
+    setFilteredCountryList(countryList);
+  }, [countryList]);
 
   return (
     <Container maxWidth="xl" className={classes.container}>
@@ -67,10 +30,10 @@ const Homepage = () => {
         justifyContent="space-between"
         className={classes.searchBar}
       >
-        <SearchBar />
+        <SearchBar updateCountryList={updateCountryList} />
       </Grid>
       <Grid container spacing={3} className={classes.content}>
-        {countries.map((country) => (
+        {filteredCountryList.map((country) => (
           <Grid
             item
             container

@@ -5,25 +5,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core";
+import { useStyles } from "./CountryCard.style";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
-
-const useStyles = makeStyles({
-  root: {
-    width: 264,
-  },
-  media: {
-    height: 160,
-  },
-  subtitle: {
-    minHeight: 48,
-    display: "flex",
-    alignItems: "center",
-    fontSize: "1.09rem",
-    lineHeight: 1.43,
-  },
-});
 
 const CountryCard = ({ country }) => {
   const classes = useStyles();

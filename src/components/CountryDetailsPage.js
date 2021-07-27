@@ -1,77 +1,46 @@
-import {
-  Container,
-  Grid,
-  Typography,
-  makeStyles,
-  Paper,
-} from "@material-ui/core";
-import { Link as RouterLink } from "react-router-dom";
+import { Container, Grid, Typography, Paper } from "@material-ui/core";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import Link from "@material-ui/core/Link";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { CountriesContext } from "../contextHelpers/CountriesContex";
+import { useStyles } from "./CountryDetailsPage.style";
 
-import data from "../static/data.json";
+const initialState = {
+  name: "",
+  flag: "",
+  nativeName: "",
+  currencies: [],
+  languages: [],
+  borders: [],
+  population: 0,
+  region: "",
+  subregion: "",
+  capital: "",
+  topLevelDomain: [],
+};
 
-const useStyles = makeStyles((theme) => ({
-  [theme.breakpoints.down("sm")]: {
-    grid: {
-      flexGrow: 0,
-      flexBasis: "100%",
-      maxWidth: "100%",
-      marginBottom: 50,
-    },
-    img: {
-      width: "100%",
-      height: "auto",
-    },
-    borderCountries: {
-      width: "100%",
-      marginBottom: 10,
-    },
-    content: {
-      marginBottom: 30,
-    },
-  },
-  [theme.breakpoints.up("md")]: {
-    grid: {
-      flexGrow: 0,
-      flexBasis: "45%",
-      maxWidth: "45%",
-      alignContent: "space-evenly",
-    },
-    img: {
-      width: "100%",
-      height: 430,
-    },
-    borderCountries: {
-      marginRight: 16,
-    },
-  },
-  container: {
-    paddingLeft: 24,
-    paddingRight: 24,
-    minWidth: 300,
-  },
-  borderCountryItem: {
-    padding: "6px 16px",
-    margin: "4px 8px 4px 0",
-    textAlign: "center",
-  },
-  back: {
-    width: 100,
-    textAlign: "center",
-    padding: 8,
-  },
-  backContainer: {
-    height: 175,
-    alignItems: "center",
-  },
-}));
-
-const CountryDetailsPage = ({ match }) => {
+const CountryDetailsPage = () => {
   const classes = useStyles();
-  const [country] = useState(
-    data.find((element) => element.name === match.params.country)
-  );
+  const { countryList } = useContext(CountriesContext);
+  const { countryName } = useParams();
+
+  const [country, setCountry] = useState(initialState);
+  const [borderCountries, setBorderCountries] = useState([]);
+
+  useEffect(() => {
+    if (countryList.length) {
+      const countryEl = countryList.find(
+        (element) => element.name === countryName
+      );
+      setCountry(countryEl);
+      setBorderCountries(
+        countryEl.borders.map(
+          (country) =>
+            countryList.find((element) => element.alpha3Code === country).name
+        )
+      );
+    }
+  }, [countryList, countryName]);
 
   return (
     <Container maxWidth="xl" className={classes.container}>
@@ -126,15 +95,13 @@ const CountryDetailsPage = ({ match }) => {
             <Typography variant="body2" className={classes.borderCountries}>
               <b>Border Countries:</b>
             </Typography>
-            {country.borders.map((country) => (
+            {borderCountries.map((country) => (
               <Paper
                 key={country}
                 elevation={2}
                 className={classes.borderCountryItem}
               >
-                <Typography variant="body2">
-                  {data.find((element) => element.alpha3Code === country).name}
-                </Typography>
+                <Typography variant="body2">{country}</Typography>
               </Paper>
             ))}
           </Grid>

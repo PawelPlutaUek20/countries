@@ -1,27 +1,11 @@
-import { makeStyles, TextField, InputAdornment } from "@material-ui/core";
+import { TextField, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { useStyles } from "./SearchBar.style";
 import React, { useState } from "react";
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: "24px 8px 24px 8px",
-    minWidth: 200,
-    backgroundColor: theme.palette.background.paper,
-    "& .MuiSelect-select:focus": {
-      backgroundColor: theme.palette.background.paper,
-    },
-    "& .Mui-focused": {
-      color: theme.palette.text.secondary,
-    },
-  },
-  query: {
-    width: 400,
-  },
-}));
 
 const regions = ["Africa", "America", "Asia", "Europe", "Oceania"];
 
-const SearchBar = () => {
+const SearchBar = ({ updateCountryList }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
     query: "",
@@ -30,6 +14,7 @@ const SearchBar = () => {
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+    updateCountryList({ ...values, [prop]: event.target.value });
   };
 
   return (
