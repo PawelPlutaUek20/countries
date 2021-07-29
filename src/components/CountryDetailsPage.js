@@ -1,5 +1,5 @@
 import { Container, Grid, Typography, Paper } from "@material-ui/core";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { Link as RouterLink, useHistory, useParams } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import React, { useState, useContext, useEffect } from "react";
 import { CountriesContext } from "../contextHelpers/CountriesContex";
@@ -21,6 +21,7 @@ const initialState = {
 
 const CountryDetailsPage = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { countryList } = useContext(CountriesContext);
   const { countryName } = useParams();
 
@@ -47,7 +48,7 @@ const CountryDetailsPage = () => {
   return (
     <Container maxWidth="xl" className={classes.container}>
       <Grid container className={classes.backContainer}>
-        <Link color="inherit" underline="none" component={RouterLink} to="/">
+        <Link color="inherit" underline="none" component={RouterLink} onClick={() => history.goBack()}>
           <Paper elevation={3} className={classes.back}>
             ← &nbsp; Back
           </Paper>
@@ -98,13 +99,20 @@ const CountryDetailsPage = () => {
               <b>Border Countries:</b>
             </Typography>
             {borderCountries.map((country) => (
-              <Paper
+              <Link
                 key={country}
-                elevation={2}
-                className={classes.borderCountryItem}
+                color="inherit"
+                underline="none"
+                component={RouterLink}
+                to={country}
               >
-                <Typography variant="body2">{country}</Typography>
-              </Paper>
+                <Paper
+                  elevation={2}
+                  className={classes.borderCountryItem}
+                >
+                  <Typography variant="body2">{country}</Typography>
+                </Paper>
+              </Link>
             ))}
           </Grid>
         </Grid>
