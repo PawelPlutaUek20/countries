@@ -45,10 +45,22 @@ const CountryDetailsPage = () => {
     }
   }, [countryList, countryName]);
 
+  const formatCountryInfos = (infos) =>
+    Object.entries(infos).map(([k, v]) => (
+      <Typography gutterBottom variant="body2">
+        <b>{k}:</b> {v}
+      </Typography>
+    ));
+
   return (
     <Container maxWidth="xl" className={classes.container}>
       <Grid container className={classes.backContainer}>
-        <Link color="inherit" underline="none" component={RouterLink} onClick={() => history.goBack()}>
+        <Link
+          color="inherit"
+          underline="none"
+          component={RouterLink}
+          onClick={() => history.goBack()}
+        >
           <Paper elevation={3} className={classes.back}>
             ← &nbsp; Back
           </Paper>
@@ -65,34 +77,24 @@ const CountryDetailsPage = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} className={classes.content}>
-            <Typography gutterBottom variant="body2">
-              <b>Native Name:</b> {country.nativeName}
-            </Typography>
-            <Typography gutterBottom variant="body2">
-              <b>Population:</b> {country.population.toLocaleString()}
-            </Typography>
-            <Typography gutterBottom variant="body2">
-              <b>Region:</b> {country.region}
-            </Typography>
-            <Typography gutterBottom variant="body2">
-              <b>Sub Rebion:</b> {country.subregion}
-            </Typography>
-            <Typography gutterBottom variant="body2">
-              <b>Capital:</b> {country.capital}
-            </Typography>
+            {formatCountryInfos({
+              "Native Name": country.nativeName,
+              "Population": country.population.toLocaleString(),
+              "Region": country.region,
+              "Sub Region": country.subregion,
+              "Capital": country.capital,
+            })}
           </Grid>
           <Grid item xs={12} sm={6} className={classes.content}>
-            <Typography gutterBottom variant="body2">
-              <b>Top Level Domain:</b> {country.topLevelDomain.join(" ")}
-            </Typography>
-            <Typography gutterBottom variant="body2">
-              <b>Currencies:</b>{" "}
-              {country.currencies.map((currency) => currency.name).join(", ")}
-            </Typography>
-            <Typography gutterBottom variant="body2">
-              <b>Languages:</b>{" "}
-              {country.languages.map((language) => language.name).join(", ")}
-            </Typography>
+            {formatCountryInfos({
+              "Top Level Domain": country.topLevelDomain.join(" "),
+              "Currencies": country.currencies
+                .map((currency) => currency.name)
+                .join(", "),
+              "Languages": country.languages
+                .map((language) => language.name)
+                .join(", "),
+            })}
           </Grid>
           <Grid item container xs={12} alignItems="center">
             <Typography variant="body2" className={classes.borderCountries}>
@@ -106,10 +108,7 @@ const CountryDetailsPage = () => {
                 component={RouterLink}
                 to={country}
               >
-                <Paper
-                  elevation={2}
-                  className={classes.borderCountryItem}
-                >
+                <Paper elevation={2} className={classes.borderCountryItem}>
                   <Typography variant="body2">{country}</Typography>
                 </Paper>
               </Link>
